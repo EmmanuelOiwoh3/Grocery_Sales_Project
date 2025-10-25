@@ -21,9 +21,13 @@ Build a data warehouse using SQL Server to show Grocery sales data, which would 
 ### Objective: 
 Using SQL Server, provide detailed insights into:
 •	Customer Purchase Behavior
+
 •	Product Performance
+
 •	Sales Trends
+
 •	Sales Persons Effectiveness
+
 •	Geographical Sales performance
 
 ### License :
