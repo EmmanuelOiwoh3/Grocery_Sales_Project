@@ -8,9 +8,13 @@ Building the Data Warehouse
 Build a data warehouse using SQL Server to show Grocery sales data, which would be used for analytics and business intelligence.
 ### Specifications: 
 •	Data Sources: The data comes from one source, which has several files in CSV format that would be imported.
+
 •	Data Quality: The data from the source are raw, unprocessed data, which would be cleaned.
+
 •	Data Integration: There would be a combination of different tables to form 2-3 user-friendly model, which would be used for Data analytics.
+
 •	Scope: No historization, only the dataset provided would be used.
+
 •	Documentation: Clear documentation processes would be provided to aid business stakeholders and data analysts.
 
 ### Analytics and Reporting (Data Analysis)
