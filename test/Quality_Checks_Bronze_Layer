@@ -7,55 +7,65 @@ that a clean data is inserted in the Silver Layer */
 Use Grosary_Sales
 
 Select * from bronze.categories
-
+--Checking for Nullls and negative Numbers- Expected Result: No Results
 Select CategoryID, COUNT(*)
 from bronze.categories
 Group by CategoryID
 Having COUNT(*) > 1 or CategoryID is null
 
+-- Checking for Unwanted spaces- Expected Result: No Unwanted Spaces
 Select CategoryName from bronze.categories
 Where CategoryName != TRIM(CategoryName)
 
 Select * from bronze.cities
-
+--Checking for Nullls and negative Numbers- Expected Result: No Results
 Select CityID, COUNT(*)
 from bronze.cities
 Group by CityID
 Having COUNT(*) > 1 or CityID is null -- Unique Primary key and no Nulls
 
+-- Checking for Unwanted spaces- Expected Result: No Unwanted Spaces
 Select Distinct CityName from bronze.cities
 
 Select CityName from bronze.cities
 Where CityName != TRIM(CityName)-- No Unwanted Spaces
 
+--Checking for Nullls
 Select Distinct Zipcode from bronze.cities
 Where Zipcode IS NULL  -- No nulls
 
 Select * from bronze.countries
 
+--Checking for Nullls and negative Numbers- Expected Result: No Results
 Select CountryID, COUNT(*)
 from bronze.countries
 Group by CountryID
 Having COUNT(*) > 1 or CountryID is null -- Unique Primary key and no Nulls
 
+-- Checking for Unwanted spaces- Expected Result: No Unwanted Spaces
 Select CountryName from bronze.countries
 Where CountryName != TRIM(CountryName)-- No Unwanted Spaces
 
+--Checking for Nullls
 Select CountryName from bronze.countries
 Where CountryName Is null -- No Nulls
 
 Select * from bronze.employees
 
+--Checking for Nullls and negative Numbers- Expected Result: No Results
 Select EmployeeID, COUNT(*)
 from bronze.employees
 Group by EmployeeID
 Having COUNT(*) > 1 or EmployeeID is null
 
+-- Checking for Unwanted spaces- Expected Result: No Unwanted Spaces
 Select FirstName,LastName, MiddleInitial from bronze.employees
 Where FirstName != TRIM(FirstName)
 
 Select FirstName,LastName, MiddleInitial from bronze.employees
 Where MiddleInitial != TRIM(MiddleInitial)
+
+--Checking for Invalid date Ranges, Ensuring that the Hiredate is not greater than Birthdate- Expected Result: No Rows
 
 Select MAX(Birthdate) from bronze.employees
 Select Min(Birthdate) from bronze.employees
@@ -66,15 +76,16 @@ Select Min(HireDate) from bronze.employees
 Select * from bronze.employees
 Where HireDate < BirthDate -- Check wrong dates, There should be no results
 
+--Data Standardization
 Select Distinct Gender from bronze.employees
 
-Select * from bronze.customers
-
+--Checking for Nullls and negative Numbers- Expected Result: No Results
 Select CustomerID, COUNT(*)
 from bronze.customers
 Group by CustomerID
 Having COUNT(*) > 1 or CustomerID is null
 
+-- Checking for Unwanted spaces- Expected Result: No Unwanted Spaces
 Select FirstName,LastName, MiddleInitial from bronze.customers
 Where FirstName != TRIM(FirstName)
 
@@ -84,19 +95,20 @@ Where MiddleInitial != TRIM(MiddleInitial)
 Select FirstName,LastName, MiddleInitial, Address from bronze.customers
 Where Address != TRIM(Address)
 
-Select * from bronze.products
-
+--Checking for Nullls and negative Numbers- Expected Result: No Results
 Select ProductID, COUNT(*)
 from bronze.products
 Group by ProductID
 Having COUNT(*) > 1 or ProductID is null
 
+-- Checking for Unwanted spaces- Expected Result: No Unwanted Spaces
 Select ProductName, Class, Resistant, IsAllegic from bronze.products
 Where ProductName != TRIM(ProductName) or 
 	  Class != TRIM(Class) or
 	  Resistant != TRIM(Resistant) or
 	  IsAllegic != TRIM(IsAllegic)-- Checking for Unwanted Spaces; No result
 
+--Checking for negative Numbers- Expected Result: No Results
 Select Price from bronze.products
 Where Price < 0 -- Checking for Negative Numbers; No results
 
@@ -106,11 +118,13 @@ Select Distinct Resistant from bronze.products
 
 Select Distinct IsAllegic from bronze.products
 
+--Data Standadization
 Select 
 Case When IsAllegic = 'Unknown' Then 'N/A'
 Else IsAllegic
 End
 From bronze.products -- Changing Unknown to N/A
 
+--Checking for negative Numbers- Expected Result: No Results
 Select VitalityDays from bronze.products
 Where VitalityDays < 0
