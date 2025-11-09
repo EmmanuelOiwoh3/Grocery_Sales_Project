@@ -1,0 +1,116 @@
+=========================================================================================
+/* This checks is to access the data quality in the bronze layer and resolve it, So 
+that a clean data is inserted in the Silver Layer */
+==========================================================================================
+
+
+Use Grosary_Sales
+
+Select * from bronze.categories
+
+Select CategoryID, COUNT(*)
+from bronze.categories
+Group by CategoryID
+Having COUNT(*) > 1 or CategoryID is null
+
+Select CategoryName from bronze.categories
+Where CategoryName != TRIM(CategoryName)
+
+Select * from bronze.cities
+
+Select CityID, COUNT(*)
+from bronze.cities
+Group by CityID
+Having COUNT(*) > 1 or CityID is null -- Unique Primary key and no Nulls
+
+Select Distinct CityName from bronze.cities
+
+Select CityName from bronze.cities
+Where CityName != TRIM(CityName)-- No Unwanted Spaces
+
+Select Distinct Zipcode from bronze.cities
+Where Zipcode IS NULL  -- No nulls
+
+Select * from bronze.countries
+
+Select CountryID, COUNT(*)
+from bronze.countries
+Group by CountryID
+Having COUNT(*) > 1 or CountryID is null -- Unique Primary key and no Nulls
+
+Select CountryName from bronze.countries
+Where CountryName != TRIM(CountryName)-- No Unwanted Spaces
+
+Select CountryName from bronze.countries
+Where CountryName Is null -- No Nulls
+
+Select * from bronze.employees
+
+Select EmployeeID, COUNT(*)
+from bronze.employees
+Group by EmployeeID
+Having COUNT(*) > 1 or EmployeeID is null
+
+Select FirstName,LastName, MiddleInitial from bronze.employees
+Where FirstName != TRIM(FirstName)
+
+Select FirstName,LastName, MiddleInitial from bronze.employees
+Where MiddleInitial != TRIM(MiddleInitial)
+
+Select MAX(Birthdate) from bronze.employees
+Select Min(Birthdate) from bronze.employees
+
+Select MAX(HireDate) from bronze.employees
+Select Min(HireDate) from bronze.employees
+
+Select * from bronze.employees
+Where HireDate < BirthDate -- Check wrong dates, There should be no results
+
+Select Distinct Gender from bronze.employees
+
+Select * from bronze.customers
+
+Select CustomerID, COUNT(*)
+from bronze.customers
+Group by CustomerID
+Having COUNT(*) > 1 or CustomerID is null
+
+Select FirstName,LastName, MiddleInitial from bronze.customers
+Where FirstName != TRIM(FirstName)
+
+Select FirstName,LastName, MiddleInitial from bronze.customers
+Where MiddleInitial != TRIM(MiddleInitial)
+
+Select FirstName,LastName, MiddleInitial, Address from bronze.customers
+Where Address != TRIM(Address)
+
+Select * from bronze.products
+
+Select ProductID, COUNT(*)
+from bronze.products
+Group by ProductID
+Having COUNT(*) > 1 or ProductID is null
+
+Select ProductName, Class, Resistant, IsAllegic from bronze.products
+Where ProductName != TRIM(ProductName) or 
+	  Class != TRIM(Class) or
+	  Resistant != TRIM(Resistant) or
+	  IsAllegic != TRIM(IsAllegic)-- Checking for Unwanted Spaces; No result
+
+Select Price from bronze.products
+Where Price < 0 -- Checking for Negative Numbers; No results
+
+Select Distinct Class from bronze.products
+
+Select Distinct Resistant from bronze.products
+
+Select Distinct IsAllegic from bronze.products
+
+Select 
+Case When IsAllegic = 'Unknown' Then 'N/A'
+Else IsAllegic
+End
+From bronze.products -- Changing Unknown to N/A
+
+Select VitalityDays from bronze.products
+Where VitalityDays < 0
